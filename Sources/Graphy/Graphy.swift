@@ -104,7 +104,7 @@ public class Graphy: UIView {
     
     for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
      // let currentY = (110 / maxHeight) * (minY - y)
-      let currentY = (lastYPoint / maxHeight) * (y)
+      let currentY = (lastYPoint / maxHeight) * (y - maxY)
       //let currentY = maxHeight / (minY - y)
       
       let showAxis = viewModel.showAxisLabels ?? false
@@ -131,10 +131,10 @@ public class Graphy: UIView {
       let zoomX = viewModel.zoom?.x ?? 1
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
-      let currentX = ((((point.x * CGFloat(zoomX)) * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)
-      let currentY = minY - ((point.y * CGFloat(zoomY)) * ySpacing) - (pointSize.height / 2)
+      let currentX = (((((point.x * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)) * CGFloat(zoomX))
+      let currentY = (minY - (point.y * ySpacing) - (pointSize.height / 2)) * CGFloat(zoomY)
       
-      
+
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
                                           width: pointSize.width,
