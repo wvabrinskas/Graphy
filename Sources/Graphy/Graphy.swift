@@ -106,7 +106,7 @@ public class Graphy: UIView {
       let showAxis = viewModel.showAxisLabels ?? false
       
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: (x - 8) * zoomX, y: minY + 15, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: x - 8, y: minY + 15, width: 50, height: 20))
         
         let rounded = Float(round(currentX * 10) / 10)
 
@@ -138,7 +138,7 @@ public class Graphy: UIView {
       let showAxis = viewModel.showAxisLabels ?? false
 
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: ((minY - y) - 5) * zoomY, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: (minY - y) - (5 * zoomY), width: 50, height: 20))
         let rounded = Float(round(currentY * 1000) / 1000)
 
         graphlabel.text = "\(rounded)"
