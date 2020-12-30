@@ -95,8 +95,11 @@ public class Graphy: UIView {
     
     for point in self.points {
       
-      let currentX = (((point.x * maxWidth) / lastXPoint) + (viewModel.offset.x / 2)) - (viewModel.pointSize.width / 2)
-      let currentY = ((point.y * ySpacing) + (viewModel.offset.y / 2)) - (viewModel.pointSize.height / 2)
+      var currentX = ((((point.x * maxWidth) / lastXPoint) + (viewModel.offset.x / 2)) - (viewModel.pointSize.width / 2))
+      var currentY = (((point.y * ySpacing) + (viewModel.offset.y / 2)) - (viewModel.pointSize.height / 2))
+      
+      currentX *= CGFloat(viewModel.zoom)
+      currentY *= CGFloat(viewModel.zoom)
       
       let oval = CGPath(ellipseIn: CGRect(x:currentX,
                                           y: currentY,
@@ -111,15 +114,16 @@ public class Graphy: UIView {
       
       graphLayer.addSublayer(shapeLayer)
       
-      if previousPoint != nil {
-        line.move(to:  CGPoint(x: previousPoint!.x + 2.5, y: previousPoint!.y + 2.5))
+      if let prevPoint = previousPoint {
+        line.move(to:  CGPoint(x: prevPoint.x + 2.5, y: prevPoint.y + 2.5))
         line.addLine(to: CGPoint(x: currentX + 2.5, y: currentY + 2.5))
       }
       
-      let pointLabel = self.pointLabel(currentPoint: CGPoint(x: currentX, y: currentY), value: point)
-      self.addSubview(pointLabel)
-      
-      
+      if viewModel.showLabels {
+        let pointLabel = self.pointLabel(currentPoint: CGPoint(x: currentX, y: currentY), value: point)
+        self.addSubview(pointLabel)
+      }
+    
       previousPoint = CGPoint(x: currentX, y: currentY)
       x += 1
     }
