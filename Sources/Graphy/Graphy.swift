@@ -35,8 +35,9 @@ public class Graphy: UIView {
     let lineLayer = CAShapeLayer()
     let axisLineLayer = CAShapeLayer()
     
-    let sorted = self.points.sorted(by: { $0.y < $1.y })
-    let lastXPoint = sorted.last!.x
+    guard let lastXPoint = self.points.last?.x else {
+      return
+    }
     
     for x in stride(from: minX, through: maxX, by: viewModel.axisScale.x) {
       let currentX = (lastXPoint / maxWidth) * (x - minX)
@@ -68,7 +69,7 @@ public class Graphy: UIView {
       
     }
     
-    for point in sorted {
+    for point in self.points {
       
       let currentX = (((point.x * maxWidth) / lastXPoint) + (viewModel.offset.x / 2)) - (viewModel.pointSize.width / 2)
       let currentY = ((point.y * ySpacing) + (viewModel.offset.y / 2)) - (viewModel.pointSize.height / 2)
