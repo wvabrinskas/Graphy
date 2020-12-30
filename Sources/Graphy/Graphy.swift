@@ -76,7 +76,7 @@ public class Graphy: UIView {
       let showAxis = viewModel.showAxisLabels ?? false
       
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY - 25, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY + 40, width: 50, height: 20))
         graphlabel.text = "\(Int(currentX))"
         graphlabel.sizeToFit()
         graphlabel.textColor = .white
@@ -89,12 +89,12 @@ public class Graphy: UIView {
     }
     
     for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
-      let currentY = (110 / maxHeight) * (y - minY)
+      let currentY = (110 / maxHeight) * (minY - y)
       
       let showAxis = viewModel.showAxisLabels ?? false
 
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: minX - 30.0, y: y - 5, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: y - 5, width: 50, height: 20))
         graphlabel.text = "\(Int(currentY))"
         graphlabel.sizeToFit()
         graphlabel.textColor = .white
