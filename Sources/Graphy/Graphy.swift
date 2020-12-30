@@ -153,13 +153,13 @@ public class Graphy: UIView {
     
     for point in self.points {
       
-      let zoomX = ((scale.x * 100) / 100) * derivations.x
-      let zoomY = ((scale.y * 100) / 100) * derivations.y
+      let zoomX = ((scale.x * 100) / 100)
+      let zoomY = ((scale.y * 100) / 100)
 
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
-      let currentX = (((point.x * zoomX * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)
-      let currentY = (minY - (((point.y * zoomY * maxHeight) / lastYPoint) - (pointSize.height / 2)))
+      let currentX = (((point.x * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2) * zoomX
+      let currentY = (minY - (((point.y * maxHeight) / lastYPoint) - (pointSize.height / 2))) * zoomY
     
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
