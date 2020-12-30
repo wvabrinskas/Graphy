@@ -82,7 +82,7 @@ public class Graphy: UIView {
       graphLayer.addSublayer(scoreLayer)
     }
     
-    for y in stride(from: minY, through: maxY, by: viewModel.axisScale.y) {
+    for y in stride(from: maxY, through: minY, by: viewModel.axisScale.y) {
       let currentY = (110 / maxHeight) * (y - minY)
       
       if viewModel.showLabels {
@@ -92,7 +92,7 @@ public class Graphy: UIView {
         self.addSubview(graphlabel)
       }
       
-      let scoreYLayer = self.scoreLine(from: CGPoint(x: maxX, y: y), to: CGPoint(x: minX, y: y))
+      let scoreYLayer = self.scoreLine(from: CGPoint(x: minX, y: y), to: CGPoint(x: maxX, y: y))
       graphLayer.addSublayer(scoreYLayer)
       
     }
