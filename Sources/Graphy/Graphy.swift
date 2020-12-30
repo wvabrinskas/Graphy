@@ -38,6 +38,10 @@ public class Graphy: UIView {
   }
   
   public func load() {
+    self.layer.sublayers?.forEach({ (layer) in
+      layer.removeFromSuperlayer()
+    })
+    
     let graphLayer = CALayer()
     graphLayer.backgroundColor = UIColor.clear.cgColor
     graphLayer.frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
@@ -74,7 +78,7 @@ public class Graphy: UIView {
       }
       
       //scores
-      let scoreLayer = self.scoreLine(from: CGPoint(x: x, y: minY), to: CGPoint(x: x, y: maxY))
+      let scoreLayer = self.scoreLine(from: CGPoint(x: x, y: maxY), to: CGPoint(x: x, y: minY))
       graphLayer.addSublayer(scoreLayer)
     }
     
@@ -147,5 +151,9 @@ public class Graphy: UIView {
     graphLayer.addSublayer(lineLayer)
     
     self.layer.addSublayer(graphLayer)
+  }
+  
+  public func update() {
+    self.load()
   }
 }
