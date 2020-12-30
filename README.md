@@ -1,2 +1,3 @@
 # Graphy
-A minimal swift line graph framework
+
+A description of this package.
