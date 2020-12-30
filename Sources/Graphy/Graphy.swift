@@ -28,7 +28,7 @@ public class Graphy: UIView {
     scoreLine.move(to: from)
     scoreLine.addLine(to: to)
     let scoreLayer = CAShapeLayer()
-    scoreLayer.strokeColor = viewModel.lineColor.cgColor
+    scoreLayer.strokeColor = viewModel.gridColor.cgColor
     scoreLayer.lineWidth = 1.0
     scoreLayer.path = scoreLine
     return scoreLayer
