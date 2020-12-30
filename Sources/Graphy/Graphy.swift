@@ -42,6 +42,10 @@ public class Graphy: UIView {
       layer.removeFromSuperlayer()
     })
     
+    self.subviews.forEach { (view) in
+      view.removeFromSuperview()
+    }
+    
     let graphLayer = CALayer()
     graphLayer.backgroundColor = viewModel.backgroundColor?.cgColor ?? UIColor.black.cgColor
     graphLayer.frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
