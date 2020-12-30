@@ -152,9 +152,9 @@ public class Graphy: UIView {
       let scale = viewModel.axisScale ?? CGPoint(x: 1.0, y: 1.0)
       let derivations = viewModel.axisDerivations ?? CGPoint(x: 10, y: 10)
 
-      let zoomY = min(1.0, max(0, scale.y)) * derivations.y
-      let zoomX = min(1.0, max(0, scale.x)) * derivations.x
-      
+      let zoomX = scale.x * derivations.x
+      let zoomY = scale.y * derivations.y
+
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
       let currentX = (((point.x * zoomX * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)
