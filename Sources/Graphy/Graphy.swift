@@ -24,7 +24,7 @@ public class Graphy: UIView {
     scoreLine.move(to: from)
     scoreLine.addLine(to: to)
     let scoreLayer = CAShapeLayer()
-    scoreLayer.strokeColor = viewModel.gridColor?.cgColor
+    scoreLayer.strokeColor = viewModel.gridColor?.cgColor ?? UIColor.lightGray.cgColor
     scoreLayer.lineWidth = 1.0
     scoreLayer.path = scoreLine
     return scoreLayer
@@ -43,7 +43,7 @@ public class Graphy: UIView {
     })
     
     let graphLayer = CALayer()
-    graphLayer.backgroundColor = viewModel.backgroundColor?.cgColor
+    graphLayer.backgroundColor = viewModel.backgroundColor?.cgColor ?? UIColor.black.cgColor
     graphLayer.frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
     
     let offsetX = viewModel.offset?.x ?? 10
@@ -137,7 +137,7 @@ public class Graphy: UIView {
       x += 1
     }
     
-    lineLayer.strokeColor = viewModel.lineColor?.cgColor
+    lineLayer.strokeColor = viewModel.lineColor?.cgColor ?? UIColor.red.cgColor
     lineLayer.lineWidth = 2.0
     lineLayer.path = line
     lineLayer.lineCap = .round
@@ -148,7 +148,7 @@ public class Graphy: UIView {
     axis.move(to: CGPoint(x: minX, y: minY))
     axis.addLine(to: CGPoint(x: minX, y: maxY))
     
-    axisLineLayer.strokeColor = viewModel.gridColor?.cgColor
+    axisLineLayer.strokeColor = viewModel.gridColor?.cgColor ?? UIColor.lightGray.cgColor
     axisLineLayer.lineWidth = 2.5
     axisLineLayer.path = axis
     
@@ -168,5 +168,7 @@ public class Graphy: UIView {
     self.viewModel.pointSize = model.pointSize
     self.viewModel.showPointLabels = model.showPointLabels
     self.viewModel.showAxisLabels = model.showAxisLabels
+    
+    self.load()
   }
 }
