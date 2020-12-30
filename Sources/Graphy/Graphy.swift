@@ -28,7 +28,7 @@ public class Graphy: UIView {
     scoreLine.move(to: from)
     scoreLine.addLine(to: to)
     let scoreLayer = CAShapeLayer()
-    scoreLayer.strokeColor = UIColor.lightGray.cgColor
+    scoreLayer.strokeColor = viewModel.lineColor.cgColor
     scoreLayer.lineWidth = 1.0
     scoreLayer.path = scoreLine
     return scoreLayer
@@ -47,7 +47,7 @@ public class Graphy: UIView {
     })
     
     let graphLayer = CALayer()
-    graphLayer.backgroundColor = UIColor.clear.cgColor
+    graphLayer.backgroundColor = viewModel.backgroundColor.cgColor
     graphLayer.frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
     
     let maxHeight = self.size.height - viewModel.offset.y
@@ -74,7 +74,7 @@ public class Graphy: UIView {
     for x in stride(from: minX, through: maxX, by: viewModel.axisScale.x) {
       let currentX = (lastXPoint / maxWidth) * (x - minX)
       
-      if viewModel.showLabels {
+      if viewModel.showAxisLabels {
         let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY - 25, width: 50, height: 20))
         graphlabel.text = "\(Int(currentX))"
         graphlabel.sizeToFit()
@@ -89,7 +89,7 @@ public class Graphy: UIView {
     for y in stride(from: maxY, through: minY, by: viewModel.axisScale.y) {
       let currentY = (110 / maxHeight) * (y - minY)
       
-      if viewModel.showLabels {
+      if viewModel.showAxisLabels {
         let graphlabel = UILabel(frame: CGRect(x: minX - 30.0, y: y - 5, width: 50, height: 20))
         graphlabel.text = "\(Int(currentY))"
         graphlabel.sizeToFit()
@@ -125,7 +125,7 @@ public class Graphy: UIView {
         line.addLine(to: CGPoint(x: currentX + 2.5, y: currentY + 2.5))
       }
       
-      if viewModel.showLabels {
+      if viewModel.showPointLabels {
         let pointLabel = self.pointLabel(currentPoint: CGPoint(x: currentX, y: currentY), value: point)
         self.addSubview(pointLabel)
       }
@@ -134,7 +134,7 @@ public class Graphy: UIView {
       x += 1
     }
     
-    lineLayer.strokeColor = UIColor.red.cgColor
+    lineLayer.strokeColor = viewModel.lineColor.cgColor
     lineLayer.lineWidth = 2.0
     lineLayer.path = line
     lineLayer.lineCap = .round
@@ -145,7 +145,7 @@ public class Graphy: UIView {
     axis.move(to: CGPoint(x: minX, y: minY))
     axis.addLine(to: CGPoint(x: minX, y: maxY))
     
-    axisLineLayer.strokeColor = UIColor.lightGray.cgColor
+    axisLineLayer.strokeColor = viewModel.gridColor.cgColor
     axisLineLayer.lineWidth = 2.5
     axisLineLayer.path = axis
     
