@@ -76,7 +76,7 @@ public class Graphy: UIView {
       let showAxis = viewModel.showAxisLabels ?? false
       
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY + 10, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: x - 8, y: minY + 15, width: 50, height: 20))
         
         let rounded = Float(round(currentX * 10) / 10)
 
@@ -84,7 +84,7 @@ public class Graphy: UIView {
         graphlabel.sizeToFit()
         graphlabel.font = UIFont.systemFont(ofSize: viewModel.labelFontSize ?? 10)
         graphlabel.textColor = .white
-        graphlabel.transform = graphlabel.transform.rotated(by: 90 * CGFloat.pi / 180)
+        graphlabel.transform = graphlabel.transform.rotated(by: 70 * CGFloat.pi / 180)
         self.addSubview(graphlabel)
       }
       
@@ -105,7 +105,7 @@ public class Graphy: UIView {
       let showAxis = viewModel.showAxisLabels ?? false
 
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: y - 5, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: currentY - 5, width: 50, height: 20))
         let rounded = Float(round(currentY * 1000) / 1000)
 
         graphlabel.text = "\(rounded)"
