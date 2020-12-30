@@ -99,14 +99,14 @@ public class Graphy: UIView {
     }
     
     for x in stride(from: minX, through: maxX, by: derivations.x * ((scale.x * 100) / 100)) {
-      let zoomX = ((scale.x * 100) / 100)
+      let zoomX = 1 / ((scale.x * 100) / 100)
 
       let currentX = (lastXPoint / maxWidth) * (x - minX) * zoomX
       
       let showAxis = viewModel.showAxisLabels ?? false
       
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: x - 8, y: minY + 15, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: (x - 8) * zoomX, y: minY + 15, width: 50, height: 20))
         
         let rounded = Float(round(currentX * 10) / 10)
 
@@ -131,14 +131,14 @@ public class Graphy: UIView {
     }
     
     for y in stride(from: maxY, through: minY, by: derivations.y * ((scale.y * 100) / 100)) {
-      let zoomY = ((scale.y * 100) / 100)
+      let zoomY = 1 / ((scale.y * 100) / 100)
       
-      let currentY = (lastYPoint / maxHeight) * (y - maxY) * (1 / zoomY)
+      let currentY = (lastYPoint / maxHeight) * (y - maxY) * zoomY
       
       let showAxis = viewModel.showAxisLabels ?? false
 
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: (minY - y) - 5, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: ((minY - y) - 5) * zoomY, width: 50, height: 20))
         let rounded = Float(round(currentY * 1000) / 1000)
 
         graphlabel.text = "\(rounded)"
