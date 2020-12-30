@@ -42,10 +42,6 @@ public class Graphy: UIView {
       layer.removeFromSuperlayer()
     })
     
-    self.subviews.forEach { (view) in
-      view.removeFromSuperview()
-    }
-    
     let graphLayer = CALayer()
     graphLayer.backgroundColor = viewModel.backgroundColor?.cgColor ?? UIColor.black.cgColor
     graphLayer.frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
@@ -83,6 +79,7 @@ public class Graphy: UIView {
         let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY - 25, width: 50, height: 20))
         graphlabel.text = "\(Int(currentX))"
         graphlabel.sizeToFit()
+        graphlabel.textColor = .white
         self.addSubview(graphlabel)
       }
       
@@ -100,6 +97,7 @@ public class Graphy: UIView {
         let graphlabel = UILabel(frame: CGRect(x: minX - 30.0, y: y - 5, width: 50, height: 20))
         graphlabel.text = "\(Int(currentY))"
         graphlabel.sizeToFit()
+        graphlabel.textColor = .white
         self.addSubview(graphlabel)
       }
       
