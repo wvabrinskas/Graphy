@@ -100,7 +100,7 @@ public class Graphy: UIView {
     for point in self.points {
       
       var currentX = ((((point.x * maxWidth) / lastXPoint) + (viewModel.offset.x / 2)) - (viewModel.pointSize.width / 2))
-      var currentY = (((point.y * ySpacing) + (viewModel.offset.y / 2)) - (viewModel.pointSize.height / 2))
+      var currentY = (((point.y * ySpacing) + (maxHeight)) - (viewModel.pointSize.height / 2))
       
       currentX *= CGFloat(viewModel.zoom.x)
       currentY *= CGFloat(viewModel.zoom.y)
