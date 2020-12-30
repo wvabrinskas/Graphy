@@ -49,10 +49,10 @@ public class Graphy: UIView {
     let maxHeight = self.size.height - viewModel.offset.y
     let maxWidth = self.size.width - viewModel.offset.x
     
-    let minX = viewModel.offset.x / 2
-    let minY = viewModel.offset.y / 2
-    let maxY = maxHeight + (viewModel.offset.y / 2)
-    let maxX = maxWidth + (viewModel.offset.x / 2)
+    let maxX = viewModel.offset.x / 2
+    let maxY = viewModel.offset.y / 2
+    let minY = maxHeight + (viewModel.offset.y / 2)
+    let minX = maxWidth + (viewModel.offset.x / 2)
     
     let ySpacing = maxHeight / 110
     
