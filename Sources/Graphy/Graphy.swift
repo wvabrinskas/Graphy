@@ -153,7 +153,7 @@ public class Graphy: UIView {
     
     for point in self.points {
       
-      let zoomX = 1 - ((scale.x * 100) / 100)
+      let zoomX = ((scale.x * 100) / 100)
       let zoomY = 1 - ((scale.y * 100) / 100)
 
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
