@@ -94,7 +94,7 @@ public class Graphy: UIView {
       return
     }
     
-    for x in stride(from: minX, through: maxX, by: viewModel.axisScale?.x ?? 100) {
+    for x in stride(from: minX, through: maxX, by: viewModel.axisDerivations?.x ?? 10) {
       let currentX = (lastXPoint / maxWidth) * (x - minX)
       
       let showAxis = viewModel.showAxisLabels ?? false
@@ -124,7 +124,7 @@ public class Graphy: UIView {
       return
     }
     
-    for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
+    for y in stride(from: maxY, through: minY, by: viewModel.axisDerivations?.y ?? 10) {
      // let currentY = (110 / maxHeight) * (minY - y)
       let currentY = (lastYPoint / maxHeight) * (y - maxY)
       //let currentY = maxHeight / (minY - y)
