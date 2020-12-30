@@ -66,7 +66,9 @@ public class Graphy: UIView {
     let lineLayer = CAShapeLayer()
     let axisLineLayer = CAShapeLayer()
     
-    guard let lastXPoint = self.points.last?.x else {
+    let sortedX = self.points.sorted(by: { $0.x < $1.x })
+    
+    guard let lastXPoint = sortedX.last?.x else {
       return
     }
     
@@ -93,13 +95,16 @@ public class Graphy: UIView {
       graphLayer.addSublayer(scoreLayer)
     }
     
-    guard let lastYPoint = self.points.last?.y else {
+    
+    let sortedY = self.points.sorted(by: { $0.y < $1.y })
+    
+    guard let lastYPoint = sortedY.last?.y else {
       return
     }
     
     for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
      // let currentY = (110 / maxHeight) * (minY - y)
-      let currentY = (lastYPoint / maxHeight) * (y)
+      let currentY = (lastYPoint / maxHeight) * (minY - y)
       //let currentY = maxHeight / (minY - y)
       
       let showAxis = viewModel.showAxisLabels ?? false
