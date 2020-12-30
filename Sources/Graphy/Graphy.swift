@@ -157,9 +157,11 @@ public class Graphy: UIView {
 //      let currentY = minY - ((((point.y * CGFloat(zoomY)) * maxHeight) * lastYPoint) - (pointSize.height / 2))
 //
       
-      let currentY = minY - point.y.map(from: 0...lastYPoint, to: 0...minY)
+      var currentY = minY - point.y.map(from: 0...lastYPoint, to: 0...minY)
+      currentY *= CGFloat(zoomY)
+      
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
-                                          y: currentY * CGFloat(zoomY),
+                                          y: currentY,
                                           width: pointSize.width,
                                           height: pointSize.height),
                         transform: nil)
