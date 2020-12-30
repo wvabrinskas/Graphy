@@ -88,13 +88,17 @@ public class Graphy: UIView {
     let lineLayer = CAShapeLayer()
     let axisLineLayer = CAShapeLayer()
     
+    let scale = viewModel.axisScale ?? CGPoint(x: 1.0, y: 1.0)
+    let derivations = viewModel.axisDerivations ?? CGPoint(x: 10, y: 10)
+
+    
     let sortedX = self.points.sorted(by: { $0.x < $1.x })
     
     guard let lastXPoint = sortedX.last?.x else {
       return
     }
     
-    for x in stride(from: minX, through: maxX, by: viewModel.axisDerivations?.x ?? 10) {
+    for x in stride(from: minX, through: maxX, by: derivations.x * scale.x) {
       let currentX = (lastXPoint / maxWidth) * (x - minX)
       
       let showAxis = viewModel.showAxisLabels ?? false
@@ -124,7 +128,7 @@ public class Graphy: UIView {
       return
     }
     
-    for y in stride(from: maxY, through: minY, by: viewModel.axisDerivations?.y ?? 10) {
+    for y in stride(from: maxY, through: minY, by: derivations.y * scale.y) {
      // let currentY = (110 / maxHeight) * (minY - y)
       let currentY = (lastYPoint / maxHeight) * (y - maxY)
       //let currentY = maxHeight / (minY - y)
@@ -149,16 +153,13 @@ public class Graphy: UIView {
     
     for point in self.points {
       
-      let scale = viewModel.axisScale ?? CGPoint(x: 1.0, y: 1.0)
-      let derivations = viewModel.axisDerivations ?? CGPoint(x: 10, y: 10)
-
       let zoomX = scale.x * derivations.x
       let zoomY = scale.y * derivations.y
 
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
-      let currentX = (((point.x * zoomX * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)
-      let currentY = (minY - (((point.y * zoomY * maxHeight) / lastYPoint) - (pointSize.height / 2)))
+      let currentX = (((point.x * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2) * zoomX
+      let currentY = (minY - (((point.y * maxHeight) / lastYPoint) - (pointSize.height / 2))) * zoomY
     
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
