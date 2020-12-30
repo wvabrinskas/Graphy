@@ -13,7 +13,31 @@ public class Graphy: UIView {
     
     self.points = points
     self.size = size
-    
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  private func scoreLine(from: CGPoint, to: CGPoint) -> CAShapeLayer {
+    let scoreLine = CGMutablePath()
+    scoreLine.move(to: from)
+    scoreLine.addLine(to: to)
+    let scoreLayer = CAShapeLayer()
+    scoreLayer.strokeColor = UIColor.lightGray.cgColor
+    scoreLayer.lineWidth = 1.0
+    scoreLayer.path = scoreLine
+    return scoreLayer
+  }
+  
+  private func pointLabel(currentPoint: CGPoint, value: CGPoint) -> UILabel {
+    let graphlabel = UILabel(frame: CGRect(x: currentPoint.x - 10, y: currentPoint.y - 10, width: 50, height: 20))
+    graphlabel.text = "(\(Int(value.x)), \(Int(value.y))%)"
+    graphlabel.sizeToFit()
+    return graphlabel
+  }
+  
+  public func load() {
     let graphLayer = CALayer()
     graphLayer.backgroundColor = UIColor.clear.cgColor
     graphLayer.frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
@@ -120,27 +144,4 @@ public class Graphy: UIView {
     
     self.layer.addSublayer(graphLayer)
   }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  private func scoreLine(from: CGPoint, to: CGPoint) -> CAShapeLayer {
-    let scoreLine = CGMutablePath()
-    scoreLine.move(to: from)
-    scoreLine.addLine(to: to)
-    let scoreLayer = CAShapeLayer()
-    scoreLayer.strokeColor = UIColor.lightGray.cgColor
-    scoreLayer.lineWidth = 1.0
-    scoreLayer.path = scoreLine
-    return scoreLayer
-  }
-  
-  private func pointLabel(currentPoint: CGPoint, value: CGPoint) -> UILabel {
-    let graphlabel = UILabel(frame: CGRect(x: currentPoint.x - 10, y: currentPoint.y - 10, width: 50, height: 20))
-    graphlabel.text = "(\(Int(value.x)), \(Int(value.y))%)"
-    graphlabel.sizeToFit()
-    return graphlabel
-  }
-  
 }
