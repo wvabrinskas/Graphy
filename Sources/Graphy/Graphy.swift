@@ -73,7 +73,9 @@ public class Graphy: UIView {
     for x in stride(from: minX, through: maxX, by: viewModel.axisScale?.x ?? 100) {
       let currentX = (lastXPoint / maxWidth) * (x - minX)
       
-      if viewModel.showAxisLabels ?? false {
+      let showAxis = viewModel.showAxisLabels ?? false
+      
+      if showAxis {
         let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY - 25, width: 50, height: 20))
         graphlabel.text = "\(Int(currentX))"
         graphlabel.sizeToFit()
@@ -88,7 +90,9 @@ public class Graphy: UIView {
     for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
       let currentY = (110 / maxHeight) * (y - minY)
       
-      if viewModel.showAxisLabels ?? false {
+      let showAxis = viewModel.showAxisLabels ?? false
+
+      if showAxis {
         let graphlabel = UILabel(frame: CGRect(x: minX - 30.0, y: y - 5, width: 50, height: 20))
         graphlabel.text = "\(Int(currentY))"
         graphlabel.sizeToFit()
@@ -128,7 +132,9 @@ public class Graphy: UIView {
         line.addLine(to: CGPoint(x: currentX + 2.5, y: currentY + 2.5))
       }
       
-      if viewModel.showPointLabels ?? false {
+      let showPoints = viewModel.showPointLabels ?? false
+      
+      if showPoints {
         let pointLabel = self.pointLabel(currentPoint: CGPoint(x: currentX, y: currentY), value: point)
         self.addSubview(pointLabel)
       }
