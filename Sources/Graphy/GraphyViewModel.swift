@@ -14,7 +14,6 @@ public struct Settable<T> {
   public var wrappedValue: T? {
     set {
       if newValue != nil {
-        wrappedValue = newValue
         oldValue = newValue
       }
     }
