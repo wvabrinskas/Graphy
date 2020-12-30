@@ -76,9 +76,10 @@ public class Graphy: UIView {
       let showAxis = viewModel.showAxisLabels ?? false
       
       if showAxis {
-        let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY + 40, width: 50, height: 20))
+        let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY + 10, width: 50, height: 20))
         graphlabel.text = "\(Int(currentX))"
         graphlabel.sizeToFit()
+        graphlabel.font = UIFont.systemFont(ofSize: viewModel.labelFontSize ?? 10)
         graphlabel.textColor = .white
         self.addSubview(graphlabel)
       }
@@ -88,8 +89,14 @@ public class Graphy: UIView {
       graphLayer.addSublayer(scoreLayer)
     }
     
+    guard let lastYPoint = self.points.last?.y else {
+      return
+    }
+    
     for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
-      let currentY = (110 / maxHeight) * (minY - y)
+     // let currentY = (110 / maxHeight) * (minY - y)
+      let currentY = (lastYPoint / maxHeight) * (minY - y)
+
       
       let showAxis = viewModel.showAxisLabels ?? false
 
@@ -97,6 +104,7 @@ public class Graphy: UIView {
         let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: y - 5, width: 50, height: 20))
         graphlabel.text = "\(Int(currentY))"
         graphlabel.sizeToFit()
+        graphlabel.font = UIFont.systemFont(ofSize: viewModel.labelFontSize ?? 10)
         graphlabel.textColor = .white
         self.addSubview(graphlabel)
       }
@@ -177,6 +185,7 @@ public class Graphy: UIView {
     self.viewModel.showPointLabels = model.showPointLabels
     self.viewModel.showAxisLabels = model.showAxisLabels
     self.viewModel.zoom = model.zoom
+    self.viewModel.labelFontSize = model.labelFontSize
     
     self.load()
   }

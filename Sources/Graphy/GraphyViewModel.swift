@@ -38,7 +38,8 @@ public struct GraphyViewModel {
   @Settable public var backgroundColor: UIColor?
   @Settable public var lineColor: UIColor?
   @Settable public var gridColor: UIColor?
-  
+  @Settable public var labelFontSize: CGFloat?
+
   public init(axisScale: CGPoint? = nil,
               showAxisLabels: Bool? = nil,
               showPointLabels: Bool? = nil,
@@ -47,7 +48,8 @@ public struct GraphyViewModel {
               zoom: CGPoint? = nil,
               backgroundColor: UIColor? = nil,
               lineColor: UIColor? = nil,
-              gridColor: UIColor? = nil) {
+              gridColor: UIColor? = nil,
+              labelFontSize: CGFloat? = nil) {
     self.axisScale = axisScale
     self.showAxisLabels = showAxisLabels
     self.showPointLabels = showPointLabels
@@ -57,5 +59,6 @@ public struct GraphyViewModel {
     self.backgroundColor = backgroundColor
     self.lineColor = lineColor
     self.gridColor = gridColor
+    self.labelFontSize = labelFontSize
   }
 }
