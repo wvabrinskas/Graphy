@@ -120,7 +120,7 @@ public class Graphy: UIView {
     
     let sortedY = self.points.sorted(by: { $0.y < $1.y })
     
-    guard let lastYPoint = sortedY.last?.y, let firstYPoint = sortedY.first?.y else {
+    guard let lastYPoint = sortedY.last?.y else {
       return
     }
     
@@ -148,9 +148,13 @@ public class Graphy: UIView {
     }
     
     for point in self.points {
+      
+      let scale = viewModel.axisScale ?? CGPoint(x: 1.0, y: 1.0)
+      let derivations = viewModel.axisDerivations ?? CGPoint(x: 10, y: 10)
 
-      let zoomY = viewModel.zoom?.y ?? 1.0
-      let zoomX = viewModel.zoom?.x ?? 1.0
+      let zoomY = min(1.0, max(0, scale.y)) * derivations.y
+      let zoomX = min(1.0, max(0, scale.x)) * derivations.x
+      
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
       let currentX = (((point.x * zoomX * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)
@@ -219,8 +223,8 @@ public class Graphy: UIView {
     self.viewModel.pointSize = model.pointSize
     self.viewModel.showPointLabels = model.showPointLabels
     self.viewModel.showAxisLabels = model.showAxisLabels
-    self.viewModel.zoom = model.zoom
     self.viewModel.labelFontSize = model.labelFontSize
+    self.viewModel.axisDerivations = model.axisDerivations
     
     self.load()
   }

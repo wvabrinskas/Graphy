@@ -30,32 +30,32 @@ public struct Settable<T> {
 
 public struct GraphyViewModel {
   @Settable public var axisScale: CGPoint?
+  @Settable public var axisDerivations: CGPoint?
   @Settable public var showAxisLabels: Bool?
   @Settable public var showPointLabels: Bool?
   @Settable public var pointSize: CGSize?
   @Settable public var offset: CGPoint?
-  @Settable public var zoom: CGPoint?
   @Settable public var backgroundColor: UIColor?
   @Settable public var lineColor: UIColor?
   @Settable public var gridColor: UIColor?
   @Settable public var labelFontSize: CGFloat?
 
   public init(axisScale: CGPoint? = nil,
+              axisDerivations: CGPoint? = nil,
               showAxisLabels: Bool? = nil,
               showPointLabels: Bool? = nil,
               pointSize: CGSize? = nil,
               offset: CGPoint? = nil,
-              zoom: CGPoint? = nil,
               backgroundColor: UIColor? = nil,
               lineColor: UIColor? = nil,
               gridColor: UIColor? = nil,
               labelFontSize: CGFloat? = nil) {
     self.axisScale = axisScale
+    self.axisDerivations = axisDerivations
     self.showAxisLabels = showAxisLabels
     self.showPointLabels = showPointLabels
     self.pointSize = pointSize
     self.offset = offset
-    self.zoom = zoom
     self.backgroundColor = backgroundColor
     self.lineColor = lineColor
     self.gridColor = gridColor
