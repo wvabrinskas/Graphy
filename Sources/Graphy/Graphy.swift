@@ -8,6 +8,7 @@ public class Graphy: UIView {
   public var viewModel: GraphyViewModel
   
   public init(points: [CGPoint], size: CGSize, viewModel: GraphyViewModel) {
+    self.viewModel = viewModel
     super.init(frame: .zero)
     
     self.points = points
