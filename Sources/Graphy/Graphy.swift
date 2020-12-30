@@ -98,7 +98,7 @@ public class Graphy: UIView {
       return
     }
     
-    for x in stride(from: minX, through: maxX, by: derivations.x * scale.x) {
+    for x in stride(from: minX, through: maxX, by: derivations.x * ((scale.x * 100) / 100)) {
       let currentX = (lastXPoint / maxWidth) * (x - minX)
       
       let showAxis = viewModel.showAxisLabels ?? false
@@ -128,7 +128,7 @@ public class Graphy: UIView {
       return
     }
     
-    for y in stride(from: maxY, through: minY, by: derivations.y * scale.y) {
+    for y in stride(from: maxY, through: minY, by: derivations.y * ((scale.y * 100) / 100)) {
      // let currentY = (110 / maxHeight) * (minY - y)
       let currentY = (lastYPoint / maxHeight) * (y - maxY)
       //let currentY = maxHeight / (minY - y)
@@ -153,8 +153,8 @@ public class Graphy: UIView {
     
     for point in self.points {
       
-      let zoomX = scale.x * derivations.x
-      let zoomY = scale.y * derivations.y
+      let zoomX = ((scale.x * 100) / 100)
+      let zoomY = ((scale.y * 100) / 100)
 
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
