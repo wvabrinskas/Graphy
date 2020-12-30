@@ -94,7 +94,7 @@ public class Graphy: UIView {
     
     let sortedX = self.points.sorted(by: { $0.x < $1.x })
     
-    guard let lastXPoint = sortedX.last?.x, let firstXPoint = sortedX.last?.y else {
+    guard let lastXPoint = sortedX.last?.x else {
       return
     }
     
@@ -124,7 +124,7 @@ public class Graphy: UIView {
     
     let sortedY = self.points.sorted(by: { $0.y < $1.y })
     
-    guard let lastYPoint = sortedY.last?.y, let firstYPoint = sortedY.first?.y else {
+    guard let lastYPoint = sortedY.last?.y else {
       return
     }
     
@@ -158,15 +158,9 @@ public class Graphy: UIView {
 
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
-     // let currentX = ((((point.x * maxWidth) / lastXPoint) + offsetX) - pointSize.width / 2) * zoomX
-     // let currentY = minY - ((((point.y * maxHeight) / lastYPoint) - (pointSize.height / 2))) * zoomY
-      
-      let mappedX = point.x.map(from: firstXPoint...lastXPoint, to: minX...maxX)
-      let mappedY = point.y.map(from: firstYPoint...lastYPoint, to: maxY...minY)
-      
-      let currentX = ((mappedX + offsetX) - (pointSize.width / 2)) * zoomX
-      let currentY = ((mappedY + offsetY) - (pointSize.height / 2)) * zoomY
-
+      let currentX = ((((point.x * maxWidth) / lastXPoint) + offsetX) - pointSize.width / 2) * zoomX
+      let currentY = minY - ((((point.y * maxHeight) / lastYPoint) - (pointSize.height / 2))) * zoomY
+    
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
                                           width: pointSize.width,
