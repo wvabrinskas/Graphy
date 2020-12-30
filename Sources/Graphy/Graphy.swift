@@ -77,7 +77,10 @@ public class Graphy: UIView {
       
       if showAxis {
         let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY + 10, width: 50, height: 20))
-        graphlabel.text = "\(Int(currentX))"
+        
+        let rounded = Float(round(currentX * 10) / 10)
+
+        graphlabel.text = "\(rounded))"
         graphlabel.sizeToFit()
         graphlabel.font = UIFont.systemFont(ofSize: viewModel.labelFontSize ?? 10)
         graphlabel.textColor = .white
@@ -102,7 +105,9 @@ public class Graphy: UIView {
 
       if showAxis {
         let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: y - 5, width: 50, height: 20))
-        graphlabel.text = "\(Int(currentY))"
+        let rounded = Float(round(currentY * 10) / 10)
+
+        graphlabel.text = "\(rounded)"
         graphlabel.sizeToFit()
         graphlabel.font = UIFont.systemFont(ofSize: viewModel.labelFontSize ?? 10)
         graphlabel.textColor = .white
