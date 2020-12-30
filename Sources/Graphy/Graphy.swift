@@ -5,11 +5,7 @@ public class Graphy: UIView {
   private var points = [CGPoint]()
   private var size: CGSize!
   
-  public var viewModel: GraphyViewModel {
-    didSet {
-      self.update()
-    }
-  }
+  public var viewModel: GraphyViewModel
   
   public init(points: [CGPoint], size: CGSize, viewModel: GraphyViewModel) {
     self.viewModel = viewModel
@@ -28,7 +24,7 @@ public class Graphy: UIView {
     scoreLine.move(to: from)
     scoreLine.addLine(to: to)
     let scoreLayer = CAShapeLayer()
-    scoreLayer.strokeColor = viewModel.gridColor.cgColor
+    scoreLayer.strokeColor = viewModel.gridColor?.cgColor
     scoreLayer.lineWidth = 1.0
     scoreLayer.path = scoreLine
     return scoreLayer
@@ -47,16 +43,19 @@ public class Graphy: UIView {
     })
     
     let graphLayer = CALayer()
-    graphLayer.backgroundColor = viewModel.backgroundColor.cgColor
+    graphLayer.backgroundColor = viewModel.backgroundColor?.cgColor
     graphLayer.frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
     
-    let maxHeight = self.size.height - viewModel.offset.y
-    let maxWidth = self.size.width - viewModel.offset.x
+    let offsetX = viewModel.offset?.x ?? 10
+    let offsetY = viewModel.offset?.y ?? 10
     
-    let minX = viewModel.offset.x / 2
-    let maxY = viewModel.offset.y / 2
-    let minY = maxHeight + (viewModel.offset.y / 2)
-    let maxX = maxWidth + (viewModel.offset.x / 2)
+    let maxHeight = self.size.height - offsetY
+    let maxWidth = self.size.width - offsetX
+    
+    let minX = offsetX / 2
+    let maxY = offsetY / 2
+    let minY = maxHeight + (offsetY / 2)
+    let maxX = maxWidth + (offsetX / 2)
     
     let ySpacing = maxHeight / 110
     
@@ -71,10 +70,10 @@ public class Graphy: UIView {
       return
     }
     
-    for x in stride(from: minX, through: maxX, by: viewModel.axisScale.x) {
+    for x in stride(from: minX, through: maxX, by: viewModel.axisScale?.x ?? 100) {
       let currentX = (lastXPoint / maxWidth) * (x - minX)
       
-      if viewModel.showAxisLabels {
+      if viewModel.showAxisLabels ?? false {
         let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY - 25, width: 50, height: 20))
         graphlabel.text = "\(Int(currentX))"
         graphlabel.sizeToFit()
@@ -86,10 +85,10 @@ public class Graphy: UIView {
       graphLayer.addSublayer(scoreLayer)
     }
     
-    for y in stride(from: maxY, through: minY, by: viewModel.axisScale.y) {
+    for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
       let currentY = (110 / maxHeight) * (y - minY)
       
-      if viewModel.showAxisLabels {
+      if viewModel.showAxisLabels ?? false {
         let graphlabel = UILabel(frame: CGRect(x: minX - 30.0, y: y - 5, width: 50, height: 20))
         graphlabel.text = "\(Int(currentY))"
         graphlabel.sizeToFit()
@@ -103,14 +102,18 @@ public class Graphy: UIView {
     
     for point in self.points {
       
-      let currentX = ((((point.x * CGFloat(viewModel.zoom.x)) * maxWidth) / lastXPoint) + (viewModel.offset.x / 2)) - (viewModel.pointSize.width / 2)
-      let currentY = minY - ((point.y * CGFloat(viewModel.zoom.y)) * ySpacing) - (viewModel.pointSize.height / 2)
+      let zoomY = viewModel.zoom?.y ?? 1
+      let zoomX = viewModel.zoom?.x ?? 1
+      let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
+      
+      let currentX = ((((point.x * CGFloat(zoomX)) * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)
+      let currentY = minY - ((point.y * CGFloat(zoomY)) * ySpacing) - (pointSize.height / 2)
       
       
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
-                                          width: viewModel.pointSize.width,
-                                          height: viewModel.pointSize.height),
+                                          width: pointSize.width,
+                                          height: pointSize.height),
                         transform: nil)
       let shapeLayer = CAShapeLayer()
       
@@ -125,7 +128,7 @@ public class Graphy: UIView {
         line.addLine(to: CGPoint(x: currentX + 2.5, y: currentY + 2.5))
       }
       
-      if viewModel.showPointLabels {
+      if viewModel.showPointLabels ?? false {
         let pointLabel = self.pointLabel(currentPoint: CGPoint(x: currentX, y: currentY), value: point)
         self.addSubview(pointLabel)
       }
@@ -134,7 +137,7 @@ public class Graphy: UIView {
       x += 1
     }
     
-    lineLayer.strokeColor = viewModel.lineColor.cgColor
+    lineLayer.strokeColor = viewModel.lineColor?.cgColor
     lineLayer.lineWidth = 2.0
     lineLayer.path = line
     lineLayer.lineCap = .round
@@ -145,7 +148,7 @@ public class Graphy: UIView {
     axis.move(to: CGPoint(x: minX, y: minY))
     axis.addLine(to: CGPoint(x: minX, y: maxY))
     
-    axisLineLayer.strokeColor = viewModel.gridColor.cgColor
+    axisLineLayer.strokeColor = viewModel.gridColor?.cgColor
     axisLineLayer.lineWidth = 2.5
     axisLineLayer.path = axis
     
@@ -156,7 +159,14 @@ public class Graphy: UIView {
     self.layer.masksToBounds = true
   }
   
-  private func update() {
-    self.load()
+  public func update(_ model: GraphyViewModel) {
+    self.viewModel.axisScale = model.axisScale
+    self.viewModel.backgroundColor = model.backgroundColor
+    self.viewModel.gridColor = model.gridColor
+    self.viewModel.lineColor = model.lineColor
+    self.viewModel.offset = model.offset
+    self.viewModel.pointSize = model.pointSize
+    self.viewModel.showPointLabels = model.showPointLabels
+    self.viewModel.showAxisLabels = model.showAxisLabels
   }
 }
