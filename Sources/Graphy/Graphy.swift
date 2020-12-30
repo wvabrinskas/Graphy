@@ -5,7 +5,11 @@ public class Graphy: UIView {
   private var points = [CGPoint]()
   private var size: CGSize!
   
-  public var viewModel: GraphyViewModel
+  public var viewModel: GraphyViewModel {
+    didSet {
+      self.update()
+    }
+  }
   
   public init(points: [CGPoint], size: CGSize, viewModel: GraphyViewModel) {
     self.viewModel = viewModel
@@ -149,9 +153,10 @@ public class Graphy: UIView {
     graphLayer.addSublayer(lineLayer)
     
     self.layer.addSublayer(graphLayer)
+    self.layer.masksToBounds = true
   }
   
-  public func update() {
+  private func update() {
     self.load()
   }
 }
