@@ -96,10 +96,10 @@ public class Graphy: UIView {
       return
     }
     
-    for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
+    for y in stride(from: minY, through: maxY, by: viewModel.axisScale?.y ?? 100) {
      // let currentY = (110 / maxHeight) * (minY - y)
       //let currentY = (lastYPoint / maxHeight) * (minY - y)
-      let currentY = y / maxHeight
+      let currentY = maxHeight / y
       
       let showAxis = viewModel.showAxisLabels ?? false
 
@@ -151,6 +151,9 @@ public class Graphy: UIView {
       
       if showPoints {
         let pointLabel = self.pointLabel(currentPoint: CGPoint(x: currentX, y: currentY), value: point)
+        pointLabel.font = UIFont.systemFont(ofSize: viewModel.labelFontSize ?? 10)
+        pointLabel.textColor = .white
+        
         self.addSubview(pointLabel)
       }
     
