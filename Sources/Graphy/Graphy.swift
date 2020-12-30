@@ -84,6 +84,7 @@ public class Graphy: UIView {
         graphlabel.sizeToFit()
         graphlabel.font = UIFont.systemFont(ofSize: viewModel.labelFontSize ?? 10)
         graphlabel.textColor = .white
+        graphlabel.transform = graphlabel.transform.rotated(by: 90 * CGFloat.pi / 180)
         self.addSubview(graphlabel)
       }
       
