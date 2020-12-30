@@ -158,8 +158,8 @@ public class Graphy: UIView {
 
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
-      let currentX = (((point.x * zoomX * maxWidth) / lastXPoint * zoomX) + (offsetX / 2)) - (pointSize.width / 2)
-      let currentY = (minY - (((point.y * zoomY * maxHeight) / lastYPoint * zoomY) - (pointSize.height / 2)))
+      let currentX = (((point.x * maxWidth) / lastXPoint * zoomX) + (offsetX / 2)) - (pointSize.width / 2)
+      let currentY = (minY - (((point.y * maxHeight) / lastYPoint * zoomY) - (pointSize.height / 2)))
     
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
