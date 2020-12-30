@@ -168,6 +168,7 @@ public class Graphy: UIView {
     self.viewModel.pointSize = model.pointSize
     self.viewModel.showPointLabels = model.showPointLabels
     self.viewModel.showAxisLabels = model.showAxisLabels
+    self.viewModel.zoom = model.zoom
     
     self.load()
   }
