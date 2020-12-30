@@ -92,7 +92,7 @@ public class Graphy: UIView {
         self.addSubview(graphlabel)
       }
       
-      let scoreYLayer = self.scoreLine(from: CGPoint(x: minX, y: y), to: CGPoint(x: maxX, y: y))
+      let scoreYLayer = self.scoreLine(from: CGPoint(x: maxX, y: y), to: CGPoint(x: minX, y: y))
       graphLayer.addSublayer(scoreYLayer)
       
     }
@@ -105,7 +105,7 @@ public class Graphy: UIView {
       currentX *= CGFloat(viewModel.zoom.x)
       currentY *= CGFloat(viewModel.zoom.y)
       
-      let oval = CGPath(ellipseIn: CGRect(x:currentX,
+      let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
                                           width: viewModel.pointSize.width,
                                           height: viewModel.pointSize.height),
