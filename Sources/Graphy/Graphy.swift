@@ -78,9 +78,9 @@ public class Graphy: UIView {
       if showAxis {
         let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY + 10, width: 50, height: 20))
         
-        let rounded = Float(round(currentX * 10) / 10)
+        let rounded = Float(round(currentX * 1000) / 1000)
 
-        graphlabel.text = "\(rounded))"
+        graphlabel.text = "\(rounded)"
         graphlabel.sizeToFit()
         graphlabel.font = UIFont.systemFont(ofSize: viewModel.labelFontSize ?? 10)
         graphlabel.textColor = .white
