@@ -78,7 +78,7 @@ public class Graphy: UIView {
       if showAxis {
         let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY + 10, width: 50, height: 20))
         
-        let rounded = Float(round(currentX * 1000) / 1000)
+        let rounded = Float(round(currentX * 10) / 10)
 
         graphlabel.text = "\(rounded)"
         graphlabel.sizeToFit()
@@ -98,14 +98,14 @@ public class Graphy: UIView {
     
     for y in stride(from: maxY, through: minY, by: viewModel.axisScale?.y ?? 100) {
      // let currentY = (110 / maxHeight) * (minY - y)
-      let currentY = (lastYPoint / maxHeight) * (minY - y)
-
+      //let currentY = (lastYPoint / maxHeight) * (minY - y)
+      let currentY = y / maxHeight
       
       let showAxis = viewModel.showAxisLabels ?? false
 
       if showAxis {
         let graphlabel = UILabel(frame: CGRect(x: minX - 40.0, y: y - 5, width: 50, height: 20))
-        let rounded = Float(round(currentY * 10) / 10)
+        let rounded = Float(round(currentY * 1000) / 1000)
 
         graphlabel.text = "\(rounded)"
         graphlabel.sizeToFit()
