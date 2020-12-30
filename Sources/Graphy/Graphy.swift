@@ -120,7 +120,7 @@ public class Graphy: UIView {
     
     let sortedY = self.points.sorted(by: { $0.y < $1.y })
     
-    guard let lastYPoint = sortedY.last?.y else {
+    guard let lastYPoint = sortedY.last?.y, let firstYPoint = sortedY.first?.y else {
       return
     }
     
@@ -157,8 +157,7 @@ public class Graphy: UIView {
 //      let currentY = minY - ((((point.y * CGFloat(zoomY)) * maxHeight) * lastYPoint) - (pointSize.height / 2))
 //
       
-      var currentY = minY - point.y.map(from: 0...lastYPoint, to: maxY...minY)
-      currentY *= CGFloat(zoomY)
+      var currentY = minY - point.y.map(from: firstYPoint...lastYPoint, to: maxY...(minY * zoomY))
       
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
