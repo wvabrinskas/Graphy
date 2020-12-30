@@ -52,7 +52,11 @@ public class Graphy: UIView {
   
   private func pointLabel(currentPoint: CGPoint, value: CGPoint) -> UILabel {
     let graphlabel = UILabel(frame: CGRect(x: currentPoint.x - 10, y: currentPoint.y - 10, width: 50, height: 20))
-    graphlabel.text = "(\(value.x), \(value.y))"
+    
+    let roundedY = Double(round(value.y * 1000) / 1000)
+    let roundedX = Double(round(value.x * 10) / 10)
+
+    graphlabel.text = "(\(roundedX), \(roundedY))"
     graphlabel.sizeToFit()
     return graphlabel
   }
@@ -155,7 +159,7 @@ public class Graphy: UIView {
       
       let currentY = minY - (point.y * CGFloat(zoomY)).map(from: 0...(lastYPoint * CGFloat(zoomY)), to: 0...minY)
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
-                                          y: currentY,
+                                          y: currentY * CGFloat(zoomY),
                                           width: pointSize.width,
                                           height: pointSize.height),
                         transform: nil)
