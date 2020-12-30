@@ -164,7 +164,7 @@ public class Graphy: UIView {
     graphLayer.addSublayer(lineLayer)
     
     self.layer.addSublayer(graphLayer)
-    self.layer.masksToBounds = true
+    //self.layer.masksToBounds = true
   }
   
   public func update(_ model: GraphyViewModel) {
