@@ -56,9 +56,7 @@ public class Graphy: UIView {
     let maxY = offsetY / 2
     let minY = maxHeight + (offsetY / 2)
     let maxX = maxWidth + (offsetX / 2)
-    
-    let ySpacing = maxHeight / 110
-    
+  
     var previousPoint: CGPoint?
     
     var x = 0
@@ -135,7 +133,7 @@ public class Graphy: UIView {
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
       var currentX = ((((point.x * CGFloat(zoomX)) * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)
-      var currentY = minY - ((point.y * CGFloat(zoomY)) * ySpacing) - (pointSize.height / 2)
+      var currentY = minY - ((point.y * CGFloat(zoomY)) * (maxHeight / lastYPoint)) - (pointSize.height / 2)
       
       currentX /= scaleX
       currentY /= scaleY
