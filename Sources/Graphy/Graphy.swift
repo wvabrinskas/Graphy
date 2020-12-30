@@ -1,6 +1,26 @@
 import Foundation
 import UIKit
 
+public extension CGFloat {
+    func map(from: ClosedRange<CGFloat>, to: ClosedRange<CGFloat>) -> CGFloat {
+        let result = ((self - from.lowerBound) / (from.upperBound - from.lowerBound)) * (to.upperBound - to.lowerBound) + to.lowerBound
+        return result
+    }
+}
+
+public extension Double {
+    func map(from: ClosedRange<CGFloat>, to: ClosedRange<CGFloat>) -> Double {
+        return Double(CGFloat(self).map(from: from, to: to))
+    }
+}
+
+public extension Float {
+    func map(from: ClosedRange<CGFloat>, to: ClosedRange<CGFloat>) -> Float {
+        return Float(CGFloat(self).map(from: from, to: to))
+    }
+}
+
+
 public class Graphy: UIView {
   private var points = [CGPoint]()
   private var size: CGSize!
@@ -130,8 +150,10 @@ public class Graphy: UIView {
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
       let currentX = ((((point.x * CGFloat(zoomX)) * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2)
-      let currentY = minY - ((((point.y * CGFloat(zoomY)) * maxHeight) * lastYPoint) - (pointSize.height / 2))
+//      let currentY = minY - ((((point.y * CGFloat(zoomY)) * maxHeight) * lastYPoint) - (pointSize.height / 2))
+//
       
+      let currentY = maxY - (point.y * CGFloat(zoomY)).map(from: 0...lastYPoint, to: 0...minY)
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
                                           width: pointSize.width,
