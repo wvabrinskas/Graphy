@@ -5,10 +5,9 @@ public class Graphy: UIView {
   private var points = [CGPoint]()
   private var size: CGSize!
   
-  public var scale:CGFloat = 100.0
-  public var pointSize = CGSize(width: 5.0, height: 5.0)
-
-  public init(points: [CGPoint], size: CGSize) {
+  public var viewModel: GraphyViewModel
+  
+  public init(points: [CGPoint], size: CGSize, viewModel: GraphyViewModel) {
     super.init(frame: .zero)
     
     self.points = points
@@ -18,16 +17,13 @@ public class Graphy: UIView {
     graphLayer.backgroundColor = UIColor.clear.cgColor
     graphLayer.frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
     
-    let xOffset:CGFloat = 200.0
-    let yOffset:CGFloat = 200.0
+    let maxHeight = self.size.height - viewModel.offset.y
+    let maxWidth = self.size.width - viewModel.offset.x
     
-    let maxHeight = self.size.height - yOffset
-    let maxWidth = self.size.width - xOffset
-    
-    let minX = xOffset / 2
-    let minY = yOffset / 2
-    let maxY = maxHeight + (yOffset / 2)
-    let maxX = maxWidth + (xOffset / 2)
+    let minX = viewModel.offset.x / 2
+    let minY = viewModel.offset.y / 2
+    let maxY = maxHeight + (viewModel.offset.y / 2)
+    let maxX = maxWidth + (viewModel.offset.x / 2)
     
     let ySpacing = maxHeight / 110
     
@@ -41,28 +37,30 @@ public class Graphy: UIView {
     let sorted = self.points.sorted(by: { $0.y < $1.y })
     let lastXPoint = sorted.last!.x
     
-    for x in stride(from: minX, through: maxX, by: self.scale) {
+    for x in stride(from: minX, through: maxX, by: viewModel.axisScale.x) {
       let currentX = (lastXPoint / maxWidth) * (x - minX)
       
-      let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY - 25, width: 50, height: 20))
-      graphlabel.text = "\(Int(currentX))"
-      graphlabel.sizeToFit()
-      
-      self.addSubview(graphlabel)
+      if viewModel.showLabels {
+        let graphlabel = UILabel(frame: CGRect(x: x - 10, y: minY - 25, width: 50, height: 20))
+        graphlabel.text = "\(Int(currentX))"
+        graphlabel.sizeToFit()
+        self.addSubview(graphlabel)
+      }
       
       //scores
       let scoreLayer = self.scoreLine(from: CGPoint(x: x, y: minY), to: CGPoint(x: x, y: maxY))
       graphLayer.addSublayer(scoreLayer)
     }
     
-    for y in stride(from: minY, through: maxY, by: self.scale) {
+    for y in stride(from: minY, through: maxY, by: viewModel.axisScale.y) {
       let currentY = (110 / maxHeight) * (y - minY)
       
-      let graphlabel = UILabel(frame: CGRect(x: minX - 30.0, y: y - 5, width: 50, height: 20))
-      graphlabel.text = "\(Int(currentY))"
-      graphlabel.sizeToFit()
-      
-      self.addSubview(graphlabel)
+      if viewModel.showLabels {
+        let graphlabel = UILabel(frame: CGRect(x: minX - 30.0, y: y - 5, width: 50, height: 20))
+        graphlabel.text = "\(Int(currentY))"
+        graphlabel.sizeToFit()
+        self.addSubview(graphlabel)
+      }
       
       let scoreYLayer = self.scoreLine(from: CGPoint(x: minX, y: y), to: CGPoint(x: maxX, y: y))
       graphLayer.addSublayer(scoreYLayer)
@@ -71,10 +69,14 @@ public class Graphy: UIView {
     
     for point in sorted {
       
-      let currentX = (((point.x * maxWidth) / lastXPoint) + (xOffset / 2)) - (pointSize.width / 2)
-      let currentY = ((point.y * ySpacing) + (yOffset / 2)) - (pointSize.height / 2)
+      let currentX = (((point.x * maxWidth) / lastXPoint) + (viewModel.offset.x / 2)) - (viewModel.pointSize.width / 2)
+      let currentY = ((point.y * ySpacing) + (viewModel.offset.y / 2)) - (viewModel.pointSize.height / 2)
       
-      let oval = CGPath(ellipseIn: CGRect(x:currentX, y: currentY, width: pointSize.width, height: pointSize.height), transform: nil)
+      let oval = CGPath(ellipseIn: CGRect(x:currentX,
+                                          y: currentY,
+                                          width: viewModel.pointSize.width,
+                                          height: viewModel.pointSize.height),
+                        transform: nil)
       let shapeLayer = CAShapeLayer()
       
       shapeLayer.fillColor = UIColor.red.cgColor
