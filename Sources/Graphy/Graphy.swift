@@ -32,7 +32,7 @@ public class Graphy: UIView {
   
   private func pointLabel(currentPoint: CGPoint, value: CGPoint) -> UILabel {
     let graphlabel = UILabel(frame: CGRect(x: currentPoint.x - 10, y: currentPoint.y - 10, width: 50, height: 20))
-    graphlabel.text = "(\(Int(value.x)), \(Int(value.y))%)"
+    graphlabel.text = "(\(value.x), \(value.y))"
     graphlabel.sizeToFit()
     return graphlabel
   }
@@ -115,7 +115,7 @@ public class Graphy: UIView {
         self.addSubview(graphlabel)
       }
       
-      let scoreYLayer = self.scoreLine(from: CGPoint(x: minX, y: y), to: CGPoint(x: maxX, y: y))
+      let scoreYLayer = self.scoreLine(from: CGPoint(x: minX, y: (minY - y)), to: CGPoint(x: maxX, y: (minY - y)))
       graphLayer.addSublayer(scoreYLayer)
       
     }
