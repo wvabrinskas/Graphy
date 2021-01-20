@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by William Vabrinskas on 12/30/20.
 //
@@ -39,6 +39,7 @@ public struct GraphyViewModel {
   @Settable public var lineColor: UIColor?
   @Settable public var gridColor: UIColor?
   @Settable public var labelFontSize: CGFloat?
+  @Settable public var resolution: Int?
 
   public init(axisScale: CGPoint? = nil,
               axisDerivations: CGPoint? = nil,
@@ -49,7 +50,8 @@ public struct GraphyViewModel {
               backgroundColor: UIColor? = nil,
               lineColor: UIColor? = nil,
               gridColor: UIColor? = nil,
-              labelFontSize: CGFloat? = nil) {
+              labelFontSize: CGFloat? = nil,
+              resolution: Int? = nil) {
     self.axisScale = axisScale
     self.axisDerivations = axisDerivations
     self.showAxisLabels = showAxisLabels
@@ -60,5 +62,8 @@ public struct GraphyViewModel {
     self.lineColor = lineColor
     self.gridColor = gridColor
     self.labelFontSize = labelFontSize
+    self.resolution = resolution
   }
 }
+
+

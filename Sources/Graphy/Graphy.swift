@@ -153,15 +153,16 @@ public class Graphy: UIView {
       
     }
     
-    for point in self.points {
+    for pointI in stride(from: 0, through: self.points.count - 1, by: viewModel.resolution ?? 1) {
+      let point = self.points[pointI]
       
       let zoomX = ((scale.x * 100) / 100)
       let zoomY = ((scale.y * 100) / 100)
 
       let pointSize = viewModel.pointSize ?? CGSize(width: 5, height: 5)
       
-      let currentX = (((point.x * maxWidth) / lastXPoint) + (offsetX / 2)) - (pointSize.width / 2) * zoomX
-      let currentY = minY - ((((point.y * maxHeight) / lastYPoint) - (pointSize.height / 2))) * zoomY
+      let currentX = (((point.x * maxWidth) / lastXPoint) + (offsetX / 2)) * zoomX
+      let currentY = minY - (((point.y * maxHeight) / lastYPoint) * zoomY)
     
       let oval = CGPath(ellipseIn: CGRect(x: currentX,
                                           y: currentY,
@@ -177,8 +178,11 @@ public class Graphy: UIView {
       graphLayer.addSublayer(shapeLayer)
       
       if let prevPoint = previousPoint {
-        line.move(to:  CGPoint(x: prevPoint.x + 2.5, y: prevPoint.y + 2.5))
-        line.addLine(to: CGPoint(x: currentX + 2.5, y: currentY + 2.5))
+        let offX = (self.viewModel.pointSize?.width ?? 0) / 2
+        let offY = (self.viewModel.pointSize?.height ?? 0) / 2
+        
+        line.move(to:  CGPoint(x: prevPoint.x + offX, y: prevPoint.y + offY))
+        line.addLine(to: CGPoint(x: currentX + offX, y: currentY + offY))
       }
       
       let showPoints = viewModel.showPointLabels ?? false
@@ -194,7 +198,7 @@ public class Graphy: UIView {
       previousPoint = CGPoint(x: currentX, y: currentY)
       x += 1
     }
-    
+
     lineLayer.strokeColor = viewModel.lineColor?.cgColor ?? UIColor.red.cgColor
     lineLayer.lineWidth = 2.0
     lineLayer.path = line
@@ -214,7 +218,7 @@ public class Graphy: UIView {
     graphLayer.addSublayer(lineLayer)
     
     self.layer.addSublayer(graphLayer)
-    //self.layer.masksToBounds = true
+    graphLayer.masksToBounds = true
   }
   
   public func update(_ model: GraphyViewModel) {
@@ -228,7 +232,10 @@ public class Graphy: UIView {
     self.viewModel.showAxisLabels = model.showAxisLabels
     self.viewModel.labelFontSize = model.labelFontSize
     self.viewModel.axisDerivations = model.axisDerivations
+    self.viewModel.resolution = model.resolution
     
     self.load()
   }
 }
+
+
